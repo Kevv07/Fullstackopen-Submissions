@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
 import Filter from './Filter'
 import PersonForm from './Personform'
 import ShowPersons from './ShowPersons'
+import { getAll } from './services/backend'
+
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
@@ -13,14 +14,14 @@ const App = () => {
 
   const [filter, setFilter] = useState('')
 
+  // Fetch data from the server
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        setPersons(response.data)
+    getAll()
+      .then((data) => {
+        console.log('Fetched data:', data.data); // Check if data is an array
+        setPersons(data.data)
       })
-  }
-  , [])
+  }, [])
 
 
   const handleNameChange = (event) => {

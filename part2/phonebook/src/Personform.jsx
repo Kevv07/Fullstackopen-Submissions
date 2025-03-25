@@ -1,3 +1,5 @@
+import { create } from './services/backend'
+
 const PersonsForm = ({ newName, handleNameChange, newPhone, handlePhoneChange, persons, setPersons }) => {
     
     const addName = (event) => {
@@ -7,6 +9,7 @@ const PersonsForm = ({ newName, handleNameChange, newPhone, handlePhoneChange, p
           return
         }
         setPersons(persons.concat({ name: newName, phone: newPhone}))
+        create({newPerson: newName, newPhone: newPhone})
       }
   
     return (
