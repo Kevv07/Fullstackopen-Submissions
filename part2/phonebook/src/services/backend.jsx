@@ -19,7 +19,7 @@ export const create = ({newPerson, newPhone}) => {
     return axios
       .post(baseUrl, { id: newId, name: newPerson, phone: newPhone })
       .then((response) => {
-        console.log('Created new person:', response.data);
+        // console.log('Created new person:', response.data);
         return response.data;
     });
 });

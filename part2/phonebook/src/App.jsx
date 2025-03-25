@@ -18,7 +18,7 @@ const App = () => {
   useEffect(() => {
     getAll()
       .then((data) => {
-        console.log('Fetched data:', data.data); // Check if data is an array
+        // console.log('Fetched data:', data.data); // Check if data is an array
         setPersons(data.data)
       })
   }, [])
