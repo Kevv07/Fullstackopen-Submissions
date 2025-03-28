@@ -1,16 +1,36 @@
+import { erase } from "./services/backend";
+
 const ShowPersons = ({ persons, filter }) => { 
+
+    const handleErase = (id, name) => {
+        if (window.confirm(`Are you sure you want to delete ${name}?`)) {
+            erase(id);
+        }
+    };
+
     if (filter === '') {
         return (
             <ul>
-                {persons.map(person => <li key={person.name}>{person.name} {person.phone}</li>)}
+                {persons.map(person => (
+                    <div key={person.name}>
+                        <li>{person.name} {person.phone} <button onClick={() => handleErase(person.id, person.name)}>erase</button></li>    
+                    </div>
+                ))}
             </ul>
-            )
-        }   
-    const filteredPersons = persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()))
+        );
+    }   
+    const filteredPersons = persons.filter(person => 
+        person.name.toLowerCase().includes(filter.toLowerCase())
+    );
     return (
         <ul>
-            {filteredPersons.map(person => <li key={person.name}>{person.name} {person.phone}</li>)}
+            {filteredPersons.map(person => (
+                <div key={person.name}>
+                    <li>{person.name} {person.phone} <button onClick={() => handleErase(person.id, person.name)}>erase</button></li>
+                </div>
+            ))}
         </ul>
-    )
-}
-export default ShowPersons
+    );
+};
+
+export default ShowPersons;

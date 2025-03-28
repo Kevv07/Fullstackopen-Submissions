@@ -23,4 +23,8 @@ export const create = ({newPerson, newPhone}) => {
         return response.data;
     });
 });
-};
+}
+
+export const erase = (id) => {
+  return axios.delete(`${baseUrl}/${id}`)
+}
