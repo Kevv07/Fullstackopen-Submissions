@@ -14,15 +14,21 @@ const App = () => {
 
   const [filter, setFilter] = useState('')
 
-  // Fetch data from the server
-  useEffect(() => {
+  // fetch data from the server
+  const refreshPersons = () => {
     getAll()
       .then((data) => {
-        // console.log('Fetched data:', data.data); // Check if data is an array
         setPersons(data.data)
       })
-  }, [])
+      .catch((error) => {
+        console.error('Error fetching data:', error)
+      })
+  }
 
+  // fetch when the component mounts
+  useEffect(() => {
+    refreshPersons()
+  }, [])
 
   const handleNameChange = (event) => {
     setNewName(event.target.value)
@@ -49,11 +55,16 @@ const App = () => {
       handlePhoneChange={handlePhoneChange}
       persons={persons}
       setPersons={setPersons}
+      refreshPersons={refreshPersons}
       />
 
       <h3>Numbers</h3>
 
-      <ShowPersons persons={persons} filter={filter} />
+      <ShowPersons 
+      persons={persons} 
+      filter={filter} 
+      refreshPersons={refreshPersons} />
+
     </div>
   )
 }

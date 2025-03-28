@@ -1,12 +1,18 @@
 import { erase } from "./services/backend";
 
-const ShowPersons = ({ persons, filter }) => { 
+const ShowPersons = ({ persons, filter, refreshPersons }) => { 
 
     const handleErase = (id, name) => {
         if (window.confirm(`Are you sure you want to delete ${name}?`)) {
-            erase(id);
+            erase(id)
+                .then(() => {
+                    refreshPersons()
+                })
+                .catch((error) => {
+                    console.error(`Error deleting ${name}:`, error)
+                })
         }
-    };
+    }
 
     if (filter === '') {
         return (
