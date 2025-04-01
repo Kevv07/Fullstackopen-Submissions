@@ -1,15 +1,22 @@
 import { erase } from "./services/backend";
 
-const ShowPersons = ({ persons, filter, refreshPersons }) => { 
+const ShowPersons = ({ persons, filter, refreshPersons, setErrorMessage }) => { 
 
     const handleErase = (id, name) => {
         if (window.confirm(`Are you sure you want to delete ${name}?`)) {
             erase(id)
                 .then(() => {
                     refreshPersons()
+                    setErrorMessage({ message: `Deleted ${name} successfully!`, type: 'success' })
+                    setTimeout(() => {
+                        setErrorMessage(null)
+                      }, 5000)
                 })
-                .catch((error) => {
-                    console.error(`Error deleting ${name}:`, error)
+                .catch(() => {
+                    setErrorMessage({ message: `Error deleting ${name}.`, type: 'error' })
+                    setTimeout(() => {
+                        setErrorMessage(null)
+                      }, 5000)              
                 })
         }
     }

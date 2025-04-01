@@ -14,14 +14,32 @@ const App = () => {
 
   const [filter, setFilter] = useState('')
 
+  const [errorMessage, setErrorMessage] = useState(null)
+
+  
+  const Notification = ({ message, type }) => {
+    if (!message) {
+      return null
+    }
+  
+    return (
+      <div className={type === 'error' ? 'error' : 'success'}>
+        {message}
+      </div>
+    )
+  }
+
   // fetch data from the server
   const refreshPersons = () => {
     getAll()
       .then((data) => {
         setPersons(data.data)
       })
-      .catch((error) => {
-        console.error('Error fetching data:', error)
+      .catch(() => {
+        setErrorMessage({ message: 'Error fetching data', type: 'error' })
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
       })
   }
 
@@ -43,7 +61,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-
+      <Notification message={errorMessage?.message} type={errorMessage?.type} />
       <Filter filter={filter} handleFilterChange={handleFilterChange} />
 
       <h3>Add a new</h3>
@@ -56,6 +74,7 @@ const App = () => {
       persons={persons}
       setPersons={setPersons}
       refreshPersons={refreshPersons}
+      setErrorMessage={setErrorMessage}
       />
 
       <h3>Numbers</h3>
@@ -63,7 +82,9 @@ const App = () => {
       <ShowPersons 
       persons={persons} 
       filter={filter} 
-      refreshPersons={refreshPersons} />
+      refreshPersons={refreshPersons} 
+      setErrorMessage={setErrorMessage}
+      />
 
     </div>
   )

@@ -1,6 +1,6 @@
 import { create, update } from './services/backend';
 
-const PersonsForm = ({ newName, handleNameChange, newPhone, handlePhoneChange, persons, setPersons, refreshPersons }) => {
+const PersonsForm = ({ newName, handleNameChange, newPhone, handlePhoneChange, persons, setPersons, refreshPersons, setErrorMessage }) => {
     
     const addName = (event) => {
         event.preventDefault()
@@ -14,9 +14,16 @@ const PersonsForm = ({ newName, handleNameChange, newPhone, handlePhoneChange, p
                 update(existingPerson.id, updatedPerson)
                     .then(() => {
                       refreshPersons()
+                      setErrorMessage({ message: `Updated ${newName} number successfully!`, type: 'success' })
+                      setTimeout(() => {
+                        setErrorMessage(null)
+                      }, 5000)
                     })
-                    .catch((error) => {
-                        console.error('Error updating person:', error)
+                    .catch(() => {
+                      setErrorMessage({ message: `Error deleting ${newName}.`, type: 'error' })
+                      setTimeout(() => {
+                        setErrorMessage(null)
+                      }, 5000)
                     })
             }
             return
@@ -26,10 +33,17 @@ const PersonsForm = ({ newName, handleNameChange, newPhone, handlePhoneChange, p
         create({ newPerson: newName, newPhone: newPhone })
           .then(() => {
           refreshPersons()
+          setErrorMessage({ message: `Added ${newName} successfully!`, type: 'success' })
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
         })
-          .catch((error) => {
-            console.error('Error creating person:', error);
-          });
+          .catch(() => {
+            setErrorMessage({ message: `Error creating ${newName}.`, type: 'error' });
+            setTimeout(() => {
+              setErrorMessage(null)
+            }, 5000)
+          })
     }
   
     return (
