@@ -13,7 +13,7 @@ const ShowPersons = ({ persons, filter, refreshPersons, setErrorMessage }) => {
                       }, 5000)
                 })
                 .catch(() => {
-                    setErrorMessage({ message: `Error deleting ${name}.`, type: 'error' })
+                    setErrorMessage({ message: `Information of ${name} has already been deleted from server.`, type: 'error' })
                     setTimeout(() => {
                         setErrorMessage(null)
                       }, 5000)              

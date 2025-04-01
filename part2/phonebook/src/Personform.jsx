@@ -20,7 +20,7 @@ const PersonsForm = ({ newName, handleNameChange, newPhone, handlePhoneChange, p
                       }, 5000)
                     })
                     .catch(() => {
-                      setErrorMessage({ message: `Error deleting ${newName}.`, type: 'error' })
+                      setErrorMessage({ message: `Information of ${newName} couldn't be found in server.`, type: 'error' })
                       setTimeout(() => {
                         setErrorMessage(null)
                       }, 5000)
